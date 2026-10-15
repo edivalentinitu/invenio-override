@@ -190,6 +190,10 @@
             {%- endif %}
           </div>
         </div>
+        {# Config driven links, already filtered by visibility server side #}
+        {%- for link in override_header_links %}
+          <a class="header-topbar-link" href="{{ link.url }}">{{ _(link.text) }}</a>
+        {%- endfor %}
         {%- for item in current_menu.submenu('profile-admin').children if item.visible %}
           {% set admin_text = item.text|safe %}
           {% if 'Administration' in item.text|safe %}

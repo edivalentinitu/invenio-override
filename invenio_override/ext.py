@@ -43,6 +43,7 @@ from .views import (
     make_redirect,
     require_authenticated,
 )
+from .visibility import public_entries
 
 
 class InvenioOverride(object):
@@ -91,6 +92,9 @@ class InvenioOverride(object):
                 "can_view_marc21": current_identity_can_view(),
                 "can_upload_publications": can_upload_publications,
                 "can_upload_oer": can_upload_oer,
+                "override_header_links": public_entries(
+                    app.config.get("OVERRIDE_HEADER_LINKS", [])
+                ),
             }
 
         @app.context_processor

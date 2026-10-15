@@ -8,6 +8,8 @@
 
 """invenio module for sharedRDM theme."""
 
+from collections.abc import Callable
+
 from invenio_global_search.components import (
     LOMToGlobalSearchComponent,
     Marc21ToGlobalSearchComponent,
@@ -108,6 +110,29 @@ OVERRIDE_HEADER_TEXT_LINE2 = None
 
 OVERRIDE_HEADER_TEXT_LINE3 = None
 """Third line of institution text shown in the navbar (e.g. 'LIBRARY & ARCHIVES'). None = hidden."""
+
+OVERRIDE_HEADER_LINKS: list[dict] = []
+"""Extra links in the top navigation bar, after the Help menu.
+
+Each link is a dict. ``roles`` and ``visible`` are optional and restrict
+who sees the link, see ``invenio_override.visibility``::
+
+    OVERRIDE_HEADER_LINKS = [
+        {
+            "text": "Archive",
+            "url": "/archive",
+            "roles": ["archive-manager"],
+            "visible": "can_archive",
+        },
+    ]
+"""
+
+OVERRIDE_VISIBILITY_RULES: dict[str, Callable[[], bool]] = {}
+"""Visibility rules by name, e.g. ``{"can_archive": lambda: ...}``.
+
+A rule is a no-argument callable returning bool. Config driven entries
+(like OVERRIDE_HEADER_LINKS) reference a rule by name with their
+``visible`` key; unknown names fail closed, the entry stays hidden."""
 
 OVERRIDE_FOOTER_BACKGROUND = None
 """CSS background color for the footer (e.g. '#4a4a4a'). None = use @footerBottomBackground from variables.less."""
