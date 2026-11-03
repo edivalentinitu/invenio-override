@@ -30,7 +30,11 @@
         <div class="ui container">{% include "invenio_override/resource_overview.html" %}</div>
       {%- endif %}
       {%- if config.get('OVERRIDE_FRONTPAGE_SHOW_RECENT_UPLOADS', False) %}
-        <div class="ui container">{% include "invenio_override/recent_uploads.html" %}</div>
+        {%- if global_search %}
+          <div class="ui container">{% include "invenio_override/recent_uploads.html" %}</div>
+        {%- else %}
+          <div class="ui container">{{ records_list() }}</div>
+        {%- endif %}
       {%- endif %}
       <div class="ui container">{% include "invenio_override/frontpage_reasons.html" %}</div>
     </div>

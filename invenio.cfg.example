@@ -83,11 +83,11 @@ OVERRIDE_FRONTPAGE_SHOW_RECENT_UPLOADS = True
 # Search — enable/disable resource types
 # ------------------------------------------------------------------------------
 
-# Enable marc21 (Publications) global search and frontpage pillar
+# Enable marc21 (Publications) search and frontpage pillar
 OVERRIDE_SHOW_PUBLICATIONS_SEARCH = False
 OVERRIDE_SHOW_PUBLICATIONS_CARD = False
 
-# Enable LOM (Educational Resources / OER) global search and frontpage pillar
+# Enable LOM (Educational Resources / OER) search and frontpage pillar
 OVERRIDE_SHOW_EDUCATIONAL_RESOURCES = False
 OVERRIDE_SHOW_EDUCATIONAL_RESOURCES_CARD = False
 
