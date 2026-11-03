@@ -5,33 +5,7 @@
 
 from collections.abc import Callable
 
-try:
-    from invenio_global_search.components import (
-        LOMToGlobalSearchComponent,
-        Marc21ToGlobalSearchComponent,
-        RDMToGlobalSearchComponent,
-    )
-except:
-    RDMToGlobalSearchComponent = None
-
 from invenio_i18n import gettext as _
-from invenio_rdm_records.services.components import (
-    DefaultRecordsComponents as RDMDefaultRecordsComponents,
-)
-
-try:
-    from invenio_records_lom.services.components import (
-        DefaultRecordsComponents as LOMDefaultRecordsComponents,
-    )
-except ImportError:
-    LOMDefaultRecordsComponents = None
-try:
-    from invenio_records_marc21.services.components import (
-        DefaultRecordsComponents as Marc21DefaultRecordsComponents,
-    )
-except ImportError:
-    Marc21DefaultRecordsComponents = None
-
 
 # ============================================================================
 # Search Configuration
@@ -44,23 +18,6 @@ OVERRIDE_SHOW_EDUCATIONAL_RESOURCES = False
 
 OVERRIDE_SHOW_RDM_SEARCH = False
 """Force UI to show only Research Results (RDM) in search/overview components."""
-
-if RDMToGlobalSearchComponent is not None:
-    OVERRIDE_RDM_RECORDS_SERVICE_COMPONENTS = RDMDefaultRecordsComponents + [
-        RDMToGlobalSearchComponent
-    ]
-else:
-    OVERRIDE_RDM_RECORDS_SERVICE_COMPONENTS = RDMDefaultRecordsComponents
-
-if LOMDefaultRecordsComponents is not None:
-    LOM_RECORDS_SERVICE_COMPONENTS = LOMDefaultRecordsComponents + [
-        LOMToGlobalSearchComponent
-    ]
-
-if Marc21DefaultRecordsComponents is not None:
-    MARC21_RECORDS_SERVICE_COMPONENTS = Marc21DefaultRecordsComponents + [
-        Marc21ToGlobalSearchComponent
-    ]
 
 # ============================================================================
 # Right Section Configuration
