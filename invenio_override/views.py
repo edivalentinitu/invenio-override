@@ -11,9 +11,16 @@ from flask import Blueprint, current_app, g, redirect, render_template, url_for
 from flask_login import current_user, login_required
 from invenio_communities.proxies import current_communities
 from invenio_rdm_records.proxies import current_rdm_records
-from invenio_records_global_search.resources.serializers import (
-    GlobalSearchJSONSerializer,
-)
+from invenio_rdm_records.resources.serializers import UIJSONSerializer
+
+try:
+    from invenio_records_global_search.resources.serializers import (
+        GlobalSearchJSONSerializer,
+    )
+
+    GLOBAL_SEARCH = True
+except ImportError:
+    GLOBAL_SEARCH = False
 from invenio_search.engine import dsl
 from invenio_users_resources.proxies import current_user_resources
 
@@ -50,7 +57,11 @@ def records_serializer(records=None) -> list:
     :param records: List of records to serialize.
     :returns: Serialized records as a list of dictionaries.
     """
-    serializer = GlobalSearchJSONSerializer()
+    if GLOBAL_SEARCH:
+        serializer = GlobalSearchJSONSerializer()
+    else:
+        serializer = UIJSONSerializer()
+
     return [serializer.dump_obj(r.to_dict()) for r in records]
 
 
@@ -63,7 +74,9 @@ def index():
     records = FrontpageRecordsSearch()[:3].sort("-created").execute()
 
     return render_template(
-        "invenio_override/frontpage.html", records=records_serializer(records)
+        "invenio_override/frontpage.html",
+        records=records_serializer(records),
+        global_search=GLOBAL_SEARCH,
     )
 
 

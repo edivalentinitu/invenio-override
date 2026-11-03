@@ -5,6 +5,13 @@
 
 from invenio_search.api import RecordsSearch
 
+try:
+    from invenio_global_search import __version__
+
+    DEFAULT_INDEX = "global-search"
+except ImportError:
+    DEFAULT_INDEX = "rdmrecords-records"
+
 
 class FrontpageRecordsSearch(RecordsSearch):
     """Search class for records that goes on the frontpage."""
@@ -12,4 +19,4 @@ class FrontpageRecordsSearch(RecordsSearch):
     class Meta:
         """Default index and filter for frontpage search."""
 
-        index = "global-search"
+        index = DEFAULT_INDEX
